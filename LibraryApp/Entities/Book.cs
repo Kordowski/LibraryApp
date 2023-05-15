@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibraryApp.Entities
 {
-    public class Books
+    public class Book : EntityBase
     {
         public int Id { get; set; }
         public string Author { get; set; }
