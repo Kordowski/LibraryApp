@@ -1,6 +1,7 @@
 ﻿using LibraryApp.Data;
-using LibraryApp.Repositories;
 using LibraryApp.Entities;
+using LibraryApp.Repositories;
+using LibraryApp.Repositories.Extensions;
 
 var readerRepository = new SqlRepository<Reader>(new LibraryAppDbContext());
 var bookRepository = new SqlRepository<Book>(new LibraryAppDbContext());
@@ -13,12 +14,10 @@ var bookRepository = new SqlRepository<Book>(new LibraryAppDbContext());
 //Console.WriteLine(emp.ToString());
 //GetReaderById(sqlRepository);
 
-AddReader(readerRepository);
-AddWorker(readerRepository);
-AddBook(bookRepository);
-WriteAllToConsole(readerRepository);
-Console.WriteLine();
-WriteAllToConsole(bookRepository);
+
+
+
+
 
 
 
@@ -29,30 +28,31 @@ static void GetReaderById(IRepository<IEntity> readersRepository)
     Console.WriteLine(reader.ToString());
 }
 
-static void AddReader(IRepository<Reader> readerRepository)
+var books = new[]
 {
-    readerRepository.Add(new Reader { FirstName = "Rafal", LastName = "Kordowski" });
-    readerRepository.Add(new Reader { FirstName = "Weronika", LastName = "Plichtowicz" });
-    readerRepository.Add(new Reader { FirstName = "Kuba", LastName = "Wodzynski" });
-    readerRepository.Save();
-}
+    new Book { Author = "J.K. Rowling", Title = "Harry Potter and the Sorcerer’s Stone" },
+    new Book { Author = "Miguel de Cervantes", Title = "Don Quixote" },
+    new Book { Author = "Charles Dickens", Title = "A Tale of Two Cities" },
+    new Book { Author = "J.R.R. Tolkien", Title = "The Lord of the Rings" }
+};
 
-static void AddWorker(IWriteRepository<Worker> managerRepository)
+var readers = new[]
 {
-    managerRepository.Add(new Worker { FirstName = "Pawel", LastName = "Gawarecki" });
-    managerRepository.Add(new Worker { FirstName = "Mohamed", LastName = "Ali" });
-    managerRepository.Save();
-}
+    new Reader { FirstName = "Rafal", LastName = "Kordowski" },
+    new Reader { FirstName = "Weronika", LastName = "Plichtowicz"},
+    new Reader { FirstName = "Kuba", LastName = "Wodzynski"},
+    new Worker { FirstName = "Pawel", LastName = "Gawarecki"},
+    new Worker { FirstName = "Mohamed", LastName = "Ali"}
+};
 
-static void AddBook(IWriteRepository<Book> bookRepository)
-{
+readerRepository.AddBatch(readers);
+bookRepository.AddBatch(books);
 
-    bookRepository.Add(new Book { Author = "J.K. Rowling", Title = "Harry Potter and the Sorcerer’s Stone" });
-    bookRepository.Add(new Book { Author = "Miguel de Cervantes", Title = "Don Quixote" });
-    bookRepository.Add(new Book { Author = "Charles Dickens", Title = "A Tale of Two Cities" });
-    bookRepository.Add(new Book { Author = "J.R.R. Tolkien", Title = "The Lord of the Rings" });
-    bookRepository.Save();
-}
+
+
+WriteAllToConsole(readerRepository);
+Console.WriteLine();
+WriteAllToConsole(bookRepository);
 
 static void WriteAllToConsole(IReadRepository<IEntity> repository)
 {
