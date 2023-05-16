@@ -17,31 +17,25 @@ namespace LibraryApp.Repositories
             _dbContext = dbContext;
             _dbSet = dbContext.Set<T>();
         }
-
         public IEnumerable<T> GetAll()
         {
             return _dbSet.OrderBy(item => item.Id).ToList();
         }
-
         public T GetById(int id)
         {
             return _dbSet.Find(id);
         }
-
         public void Add(T item)
         {
             _dbSet.Add(item);
         }
-
         public void Remove(T item)
         {
             _dbSet.Remove(item);
         }
-
         public void Save()
         {
             _dbContext.SaveChanges();
         }
-
     }
 }
