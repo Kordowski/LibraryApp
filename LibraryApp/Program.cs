@@ -4,20 +4,28 @@ using LibraryApp.Entities;
 using LibraryApp.Repositories;
 using LibraryApp.Repositories.Extensions;
 
-var itemAdded = new ItemAdded(ReaderAdded);
-var readerRepository = new SqlRepository<Reader>(new LibraryAppDbContext(), itemAdded);
-var bookRepository = new SqlRepository<Book>(new LibraryAppDbContext());
 
-static void ReaderAdded(object item)
+
+var readerRepository = new SqlRepository<Reader>(new LibraryAppDbContext());
+var bookRepository = new SqlRepository<Book>(new LibraryAppDbContext());
+readerRepository.ItemAdded += ReaderRepositoryOnItemAdded;
+bookRepository.ItemAdded += BookRepositoryOnItemAdded;
+
+void BookRepositoryOnItemAdded(object? sender, Book e)
 {
-    var reader = (Reader)item;
-    Console.WriteLine($"{reader.FirstName} added");
+    Console.WriteLine($"Book added => {e.Title} from {sender?.GetType().Name}");
 }
+void ReaderRepositoryOnItemAdded(object? sender, Reader e)
+{
+    Console.WriteLine($"Reader added => {e.FirstName} from {sender?.GetType().Name}");
+}
+/*
 static void GetReaderById(IRepository<IEntity> readersRepository)
 {
     var reader = readersRepository.GetById(2);
-    Console.WriteLine(reader.ToString());
+    Console.WriteLine(reader?.ToString());
 }
+*/
 var books = new[]
 {
     new Book { Author = "J.K. Rowling", Title = "Harry Potter and the Sorcerer’s Stone" },
@@ -40,7 +48,7 @@ Console.WriteLine();
 WriteAllToConsole(bookRepository);
 static void WriteAllToConsole(IReadRepository<IEntity> repository)
 {
-    Console.WriteLine($"Items in class:");
+    Console.WriteLine($"Items from SQL:");
     var items = repository.GetAll();
     foreach (var entity in items)
     {

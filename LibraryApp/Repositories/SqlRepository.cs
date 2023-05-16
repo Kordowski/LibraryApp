@@ -3,18 +3,15 @@ using LibraryApp.Entities;
 using Microsoft.EntityFrameworkCore;
 namespace LibraryApp.Repositories;
 
-public delegate void ItemAdded(object item);
-
 public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
 {
     private readonly DbSet<T> _dbSet;
     private readonly DbContext _dbContext;
-    private readonly ItemAdded? _itemAddedCallBack;
-    public SqlRepository(DbContext dbContext, ItemAdded? itemAddedCallBack = null)
+    public event EventHandler<T>? ItemAdded; 
+    public SqlRepository(DbContext dbContext)
     {
         _dbContext = dbContext;
         _dbSet = dbContext.Set<T>();
-        _itemAddedCallBack = itemAddedCallBack;
     }
 
     public IEnumerable<T> GetAll()
@@ -30,7 +27,7 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
     public void Add(T item)
     {
         _dbSet.Add(item);
-        _itemAddedCallBack?.Invoke(item);
+        ItemAdded?.Invoke(this, item);
     }
 
     public void Remove(T item)
