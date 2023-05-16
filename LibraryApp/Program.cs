@@ -10,7 +10,6 @@ static void GetReaderById(IRepository<IEntity> readersRepository)
     var reader = readersRepository.GetById(2);
     Console.WriteLine(reader.ToString());
 }
-
 var books = new[]
 {
     new Book { Author = "J.K. Rowling", Title = "Harry Potter and the Sorcerer’s Stone" },
@@ -18,7 +17,6 @@ var books = new[]
     new Book { Author = "Charles Dickens", Title = "A Tale of Two Cities" },
     new Book { Author = "J.R.R. Tolkien", Title = "The Lord of the Rings" }
 };
-
 var readers = new[]
 {
     new Reader { FirstName = "Rafal", LastName = "Kordowski" },
@@ -32,7 +30,6 @@ bookRepository.AddBatch(books);
 WriteAllToConsole(readerRepository);
 Console.WriteLine();
 WriteAllToConsole(bookRepository);
-
 static void WriteAllToConsole(IReadRepository<IEntity> repository)
 {
     Console.WriteLine($"Items in");

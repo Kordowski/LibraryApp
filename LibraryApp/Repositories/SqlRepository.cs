@@ -1,41 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibraryApp.Entities;
+﻿using LibraryApp.Entities;
 using Microsoft.EntityFrameworkCore;
+namespace LibraryApp.Repositories;
 
-namespace LibraryApp.Repositories
+public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
 {
-    public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
+    private readonly DbSet<T> _dbSet;
+    private readonly DbContext _dbContext;
+    public SqlRepository(DbContext dbContext)
     {
-        private readonly DbSet<T> _dbSet;
-        private readonly DbContext _dbContext;
-        public SqlRepository(DbContext dbContext)
-        {
-            _dbContext = dbContext;
-            _dbSet = dbContext.Set<T>();
-        }
-        public IEnumerable<T> GetAll()
-        {
-            return _dbSet.OrderBy(item => item.Id).ToList();
-        }
-        public T GetById(int id)
-        {
-            return _dbSet.Find(id);
-        }
-        public void Add(T item)
-        {
-            _dbSet.Add(item);
-        }
-        public void Remove(T item)
-        {
-            _dbSet.Remove(item);
-        }
-        public void Save()
-        {
-            _dbContext.SaveChanges();
-        }
+        _dbContext = dbContext;
+        _dbSet = dbContext.Set<T>();
+    }
+    public IEnumerable<T> GetAll()
+    {
+        return _dbSet.OrderBy(item => item.Id).ToList();
+    }
+    public T? GetById(int id)
+    {
+        return _dbSet.Find(id);
+    }
+    public void Add(T item)
+    {
+        _dbSet.Add(item);
+    }
+    public void Remove(T item)
+    {
+        _dbSet.Remove(item);
+    }
+    public void Save()
+    {
+        _dbContext.SaveChanges();
     }
 }
+
