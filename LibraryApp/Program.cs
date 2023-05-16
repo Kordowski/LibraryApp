@@ -1,10 +1,18 @@
-﻿using LibraryApp.Data;
+﻿using System.Threading.Channels;
+using LibraryApp.Data;
 using LibraryApp.Entities;
 using LibraryApp.Repositories;
 using LibraryApp.Repositories.Extensions;
 
-var readerRepository = new SqlRepository<Reader>(new LibraryAppDbContext());
+var itemAdded = new ItemAdded(ReaderAdded);
+var readerRepository = new SqlRepository<Reader>(new LibraryAppDbContext(), itemAdded);
 var bookRepository = new SqlRepository<Book>(new LibraryAppDbContext());
+
+static void ReaderAdded(object item)
+{
+    var reader = (Reader)item;
+    Console.WriteLine($"{reader.FirstName} added");
+}
 static void GetReaderById(IRepository<IEntity> readersRepository)
 {
     var reader = readersRepository.GetById(2);
@@ -32,7 +40,7 @@ Console.WriteLine();
 WriteAllToConsole(bookRepository);
 static void WriteAllToConsole(IReadRepository<IEntity> repository)
 {
-    Console.WriteLine($"Items in");
+    Console.WriteLine($"Items in class:");
     var items = repository.GetAll();
     foreach (var entity in items)
     {
