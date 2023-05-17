@@ -10,7 +10,7 @@ var readerRepository = new SqlRepository<Reader>(new LibraryAppDbContext());
 var bookRepository = new SqlRepository<Book>(new LibraryAppDbContext());
 readerRepository.ItemAdded += ReaderRepositoryOnItemAdded;
 bookRepository.ItemAdded += BookRepositoryOnItemAdded;
-
+Terminal.Hello();
 void BookRepositoryOnItemAdded(object? sender, Book e)
 {
     Console.WriteLine($"Book added => {e.Title} from {sender?.GetType().Name}");
@@ -19,13 +19,11 @@ void ReaderRepositoryOnItemAdded(object? sender, Reader e)
 {
     Console.WriteLine($"Reader added => {e.FirstName} from {sender?.GetType().Name}");
 }
-/*
-static void GetReaderById(IRepository<IEntity> readersRepository)
-{
-    var reader = readersRepository.GetById(2);
-    Console.WriteLine(reader?.ToString());
-}
-*/
+//static void GetReaderById(IRepository<IEntity> readersRepository)
+//{
+//    var reader = readersRepository.GetById(2);
+//    Console.WriteLine(reader?.ToString());
+//}
 var books = new[]
 {
     new Book { Author = "J.K. Rowling", Title = "Harry Potter and the Sorcerer’s Stone" },
