@@ -1,6 +1,6 @@
-﻿using LibraryApp.Data;
-using LibraryApp.Entities;
+﻿using LibraryApp.Entities;
 using Microsoft.EntityFrameworkCore;
+
 namespace LibraryApp.Repositories;
 
 public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
@@ -9,6 +9,8 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
     private readonly DbContext _dbContext;
     public event EventHandler<T>? ItemAdded;
     public event EventHandler<T>? ItemRemoved;
+
+    public Guid Id { get; set; }
 
     public SqlRepository(DbContext dbContext)
     {
@@ -42,7 +44,5 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
     {
         _dbContext.SaveChanges();
     }
-
-
 }
 
