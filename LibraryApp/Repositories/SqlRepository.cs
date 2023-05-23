@@ -7,7 +7,9 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
 {
     private readonly DbSet<T> _dbSet;
     private readonly DbContext _dbContext;
-    public event EventHandler<T>? ItemAdded; 
+    public event EventHandler<T>? ItemAdded;
+    public event EventHandler<T>? ItemRemoved;
+
     public SqlRepository(DbContext dbContext)
     {
         _dbContext = dbContext;
@@ -33,11 +35,14 @@ public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
     public void Remove(T item)
     {
         _dbSet.Remove(item);
+        ItemRemoved?.Invoke(this, item);
     }
 
     public void Save()
     {
         _dbContext.SaveChanges();
     }
+
+
 }
 

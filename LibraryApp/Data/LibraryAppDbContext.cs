@@ -12,6 +12,7 @@ namespace LibraryApp.Data
     {
         public DbSet<Reader> Readers => Set<Reader>();
         public DbSet<Book> Books => Set<Book>();
+        public DbSet<AuditEntry> Audits => Set<AuditEntry>();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

@@ -7,7 +7,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 
 
-namespace LibraryApp.Entities;
+namespace LibraryApp.Repositories;
 
 public class Terminal
 {
@@ -24,6 +24,7 @@ public class Terminal
         Console.WriteLine("2.Book");
         Console.WriteLine("3.Borrow Book");
         Console.WriteLine("Press 'x' to close App");
+
     }
 
     public static void ReaderMenu()
@@ -34,6 +35,8 @@ public class Terminal
         Console.WriteLine("3.Return Book");
         Console.WriteLine("4.Find Reader by ID");
         Console.WriteLine("5.Check Reader Borrows");
+        Console.WriteLine("6.Serial Addition Readers");
+        Console.WriteLine("7.Show All Readers");
         Console.WriteLine("Press 'x' to back to main menu");
     }
 
@@ -42,8 +45,10 @@ public class Terminal
         Console.WriteLine("Choose an option for Book:");
         Console.WriteLine("1.Add Book");
         Console.WriteLine("2.Remove Book");
+        Console.WriteLine("3.Show All Books");
         Console.WriteLine("Press 'x' to back to main menu");
     }
+
 
     public static void BorrowMenu()
     {
