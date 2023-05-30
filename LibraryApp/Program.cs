@@ -1,5 +1,12 @@
 ﻿using LibraryApp;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.File("Audit.txt")
+    .CreateLogger();
 
 var startup = new Startup();
 
@@ -9,36 +16,12 @@ var terminal = serviceProvider.GetService<Terminal>();
 
 terminal.Start();
 
+Log.CloseAndFlush();
 
-//var closeApp = false;
-//while (!closeApp)
-//{
-//    Terminal.MainMenu();
-//    var userInput = Console.ReadLine();
-//    switch (userInput)
-//    {
-//        case "1":
-//            {
-//                ReaderUI();
-//                break;
-//            }
-//        case "2":
-//            {
 
-//                break;
-//            }
-//        case "3":
-//            {
-//                break;
-//            }
-//        case "x":
-//        case "X":
-//            {
-//                CloseApp = true;
-//                break;
-//            }
-//    }
-//}
+
+
+
 
 
 //List<AuditEntry> auditEntries = new List<AuditEntry>();
@@ -58,33 +41,8 @@ terminal.Start();
 //File.WriteAllText("Audit.json", json);
 
 
-
-////var books = new[]
-////{
-////    new Book { Author = "J.K. Rowling", Title = "Harry Potter and the Sorcerer’s Stone" },
-////    new Book { Author = "Miguel de Cervantes", Title = "Don Quixote" },
-////    new Book { Author = "Charles Dickens", Title = "A Tale of Two Cities" },
-////    new Book { Author = "J.R.R. Tolkien", Title = "The Lord of the Rings" }
-////};
-
-////bookRepository.AddBatch(books);
-
-//Console.WriteLine();
-//WriteAllToConsole(bookRepository);
-//static void WriteAllToConsole(IReadRepository<IEntity> repository)
-//{
-//    Console.WriteLine($"Items from SQL:");
-//    var items = repository.GetAll();
-//    foreach (var entity in items)
-//    {
-//        Console.WriteLine(entity.ToString());
-//    }
-//}
-
 //void ReaderUI()
 //{
-//    string userInput;
-//    Terminal.ReaderMenu();
 //    userInput = Console.ReadLine();
 //    switch (userInput)
 //    {
@@ -137,19 +95,6 @@ terminal.Start();
 //            break;
 //    }
 //}
-//void GetReaderById(IRepository<Reader> readersRepository)
-//{
-//    Console.WriteLine($"Input Reader ID: ");
-//    var input = int.Parse(Console.ReadLine());
-//    var reader = readersRepository.GetById(input);
-//    Console.WriteLine(reader?.ToString());
-//    Console.WriteLine($"Do you want to delete this reader?");
-//    Console.WriteLine($"Press 'Y' for Delete reader, anything else for leave");
-//    var UserInput = Console.ReadLine();
-//    if (UserInput == "Y" || UserInput == "y")
-//    {
-//        readerRepository.Remove(reader);
-//    }
-//}
+
 
 

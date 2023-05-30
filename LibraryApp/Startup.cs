@@ -16,7 +16,7 @@ namespace LibraryApp
                 .AddScoped<SqlRepository<Reader>>()
                 .AddScoped<SqlRepository<Book>>()
                 .AddTransient<DbSeeder>()
-                .AddTransient<TerminalService>()
+                .AddTransient<TerminalService>()//.AddTransient<ITerminalService, TerminalService>()
                 .AddTransient<Terminal>()
                 .BuildServiceProvider();
 

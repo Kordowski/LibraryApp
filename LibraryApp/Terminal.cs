@@ -1,6 +1,7 @@
 ﻿using LibraryApp.Entities;
 using LibraryApp.Repositories;
 using LibraryApp.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LibraryApp;
 
@@ -16,7 +17,6 @@ public class Terminal
     public void Start()
     {
         Hello();
-
         MainMenu();
     }
 
@@ -51,6 +51,7 @@ public class Terminal
                     BorrowMenu();
                     break;
                 case "X":
+                    ByeMessage();
                     return;
             };
         }
@@ -100,6 +101,37 @@ public class Terminal
         Console.WriteLine(message);
     }
 
+    // private void GetBookById()
+    //{
+    //    WriteAllToConsole(_terminalService);
+    //    var isValid = false;
+    //    int number;
+    //    do
+    //    {
+    //        Console.WriteLine($"Input Book ID: ");
+    //        string input = Console.ReadLine();
+    //        isValid = int.TryParse(input, out number);
+    //        if (!isValid)
+    //        {
+    //            Console.WriteLine("Wrong value. Try again.");
+    //        }
+    //    } while (!isValid);
+
+    //    var book = bookRepository.GetById(number);
+    //    Console.WriteLine(book?.ToString());
+    //    Console.WriteLine($"Do you want to delete this book?");
+    //    Console.WriteLine($"Press 'Y' for Delete reader, anything else for leave");
+    //    var UserInput = Console.ReadLine().ToUpper();
+    //    if (UserInput == "Y")
+    //    {
+    //     //   _terminalService.RemoveBook(book, out var message);
+    //    }
+    //}
+    private void GetReaderById()
+    {
+        _terminalService.GetReaderById();
+    }
+
     #endregion
 
     #region BookMenu
@@ -117,14 +149,34 @@ public class Terminal
             switch (ReadKey())
             {
                 case "1":
-                    Console.WriteLine("Add new Book");
+                    AddNewBook();
+                    ClickAnyButton();
                     break;
+                case "2":
+                    GetReaderById();
+                    ClickAnyButton();
+                    break;
+
                 case "X":
                     return;
             };
         }
     }
 
+    private void AddNewBook()
+    {
+        Console.WriteLine("Add new Book");
+        Console.WriteLine("");
+
+        Console.Write("Title: ");
+        var title = Console.ReadLine();
+
+        Console.Write("Author: ");
+        var author = Console.ReadLine();
+
+        _terminalService.AddBook(title, author, out var message);
+        Console.WriteLine(message);
+    }
     #endregion
 
     #region BorrowMenu
@@ -172,5 +224,20 @@ public class Terminal
         return input;
     }
 
+    private void ByeMessage()
+    {
+        Console.WriteLine($"Bye Bye!");
+    }
+
+    static void WriteAllToConsole(IReadRepository<IEntity> repository)
+    {
+        Console.WriteLine($"Items from SQL:");
+        var items = repository.GetAll();
+        foreach (var entity in items)
+        {
+            Console.WriteLine(entity.ToString());
+        }
+    }
     #endregion
+
 }
