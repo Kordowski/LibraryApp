@@ -67,11 +67,8 @@ public class Terminal
             Console.WriteLine("Choose an option for Reader:");
             Console.WriteLine("1.Add new Reader");
             Console.WriteLine("2.Remove Reader");
-            Console.WriteLine("3.Return Book");
-            Console.WriteLine("4.Find Reader by ID");
-            Console.WriteLine("5.Check Reader Borrows");
-            Console.WriteLine("6.Serial Addition Readers");
-            Console.WriteLine("7.Show All Readers");
+            Console.WriteLine("3.Find Reader by ID");
+            Console.WriteLine("4.Show All Readers");
             Console.WriteLine("Press 'x' to back to main menu");
 
             switch (ReadKey())
@@ -80,6 +77,16 @@ public class Terminal
                     AddNewReader();
                     ClickAnyButton();
                     break;
+                case "2":
+                case "3":
+                    GetReaderById();
+                    ClickAnyButton();
+                    break;
+                case "4":
+                    _terminalService.WriteAllReadersToConsole();
+                    ClickAnyButton();
+                    break;
+                    
                 case "X":
                     return;
             };
@@ -142,8 +149,9 @@ public class Terminal
         {
             Console.WriteLine("Choose an option for Book:");
             Console.WriteLine("1.Add new Book");
-            Console.WriteLine("2.Remove Book");
-            Console.WriteLine("3.Show All Books");
+            Console.WriteLine("2.Get Reader by Id");
+            Console.WriteLine("3.Remove Book");
+            Console.WriteLine("4.Show All Books");
             Console.WriteLine("Press 'x' to back to main menu");
 
             switch (ReadKey())
@@ -153,10 +161,14 @@ public class Terminal
                     ClickAnyButton();
                     break;
                 case "2":
-                    GetReaderById();
+                case "3":
+                    _terminalService.WriteAllBooksToConsole();
                     ClickAnyButton();
                     break;
-
+                case "4":
+                    _terminalService.WriteAllBooksToConsole();
+                    ClickAnyButton();
+                    break;
                 case "X":
                     return;
             };

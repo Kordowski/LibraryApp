@@ -93,9 +93,6 @@ namespace LibraryApp.Services
 
         public void GetReaderById()
         {
-            var items = _readerRepository.GetAll();
-            items.Count();
-
             WriteAllToConsole(_readerRepository);
             Console.WriteLine($"Input Reader ID: ");
             var input = int.Parse(Console.ReadLine());
@@ -107,6 +104,22 @@ namespace LibraryApp.Services
             if (UserInput == "Y")
             {
                 _readerRepository.Remove(reader);
+                _readerRepository.Save();
+            }
+        }
+        public void GetBookById()
+        {
+            WriteAllToConsole(_bookRepository);
+            Console.WriteLine($"Input Book ID: ");
+            var input = int.Parse(Console.ReadLine());
+            var book = _bookRepository.GetById(input);
+            Console.WriteLine(book?.ToString());
+            Console.WriteLine($"Do you want to delete this book?");
+            Console.WriteLine($"Press 'Y' for Delete reader, anything else for leave");
+            var UserInput = Console.ReadLine().ToUpper();
+            if (UserInput == "Y")
+            {
+                _bookRepository.Remove(book);
                 _bookRepository.Save();
             }
         }
@@ -114,6 +127,24 @@ namespace LibraryApp.Services
         {
             Console.WriteLine($"Items from SQL:");
             var items = repository.GetAll();
+            foreach (var entity in items)
+            {
+                Console.WriteLine(entity.ToString());
+            }
+        }
+        public void WriteAllReadersToConsole()
+        {
+            var items = _readerRepository.GetAll();
+            Console.WriteLine($"Items from SQL:");
+            foreach (var entity in items)
+            {
+                Console.WriteLine(entity.ToString());
+            }
+        }
+        public void WriteAllBooksToConsole()
+        {
+            var items = _bookRepository.GetAll();
+            Console.WriteLine($"Items from SQL:");
             foreach (var entity in items)
             {
                 Console.WriteLine(entity.ToString());
