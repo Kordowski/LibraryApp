@@ -12,10 +12,8 @@ public static class EntitiyExtensions
             string sciezkaPliku = @"C:\Sciezka\Do\Readers.txt";
         try
             {
-                // Utwórz obiekt StreamWriter i przekaż ścieżkę pliku jako argument konstruktora
                 using (StreamWriter writer = new StreamWriter(sciezkaPliku))
                 {
-                    // Zapisz tekst do pliku
                     writer.WriteLine(json);
                 }
 

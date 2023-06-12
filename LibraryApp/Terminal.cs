@@ -149,7 +149,7 @@ public class Terminal
         {
             Console.WriteLine("Choose an option for Book:");
             Console.WriteLine("1.Add new Book");
-            Console.WriteLine("2.Get Reader by Id");
+            Console.WriteLine("2.Get Book by Id");
             Console.WriteLine("3.Remove Book");
             Console.WriteLine("4.Show All Books");
             Console.WriteLine("Press 'x' to back to main menu");
@@ -162,7 +162,7 @@ public class Terminal
                     break;
                 case "2":
                 case "3":
-                    _terminalService.WriteAllBooksToConsole();
+                    _terminalService.GetBookById();
                     ClickAnyButton();
                     break;
                 case "4":

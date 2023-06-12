@@ -35,6 +35,24 @@ namespace LibraryApp.Data
                 new Worker { FirstName = "Mohamed", LastName = "Ali" }
             };
 
+            var books = new[]
+            {
+                new Book { Author = "J. K. Rowling", Title = "Harry Potter and the Philosopher's Stone" },
+                new Book { Author = "Frank Herbert", Title = "Diuna" },
+                new Book { Author = "Agatha Christie", Title = "And Then There Were None" },
+                new Book { Author = "Cao Xueqin", Title = "Dream of the Red Chamber" },
+                new Book { Author = "J. R. R. Tolkien", Title = "The Hobbit" },
+                new Book { Author = "The Lion, the Witch and the Wardrobe", Title = "C. S. Lewis" },
+                new Book { Author = "She: A History of Adventure", Title = "H. Rider Haggard" },
+                new Book { Author = "Harry Potter and the Chamber of Secrets", Title = "J. K. Rowling" },
+                new Book { Author = "Harry Potter and the Chamber of Secrets", Title = "J. K. Rowling" },
+                new Book { Author = "Harry Potter and the Prisoner of Azkaban", Title = "J. K. Rowling" }
+            };
+
+            _bookRepository.AddBatch(books);
+
+            _bookRepository.Save();
+
             _readerRepository.AddBatch(readers);
 
             _readerRepository.Save();
