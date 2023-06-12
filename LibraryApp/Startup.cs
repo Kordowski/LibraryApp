@@ -36,5 +36,14 @@ namespace LibraryApp
 
             Console.WriteLine("Problem z przygotowaniem bazy");
         }
+        public void CreateDir()
+        {
+            string folderPath = "SavedInFile";
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+                Console.WriteLine("Folder został utworzony.");
+            }
+        }
     }
 }

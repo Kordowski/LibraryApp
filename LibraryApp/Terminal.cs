@@ -1,6 +1,7 @@
 ﻿using LibraryApp.Entities;
 using LibraryApp.Repositories;
 using LibraryApp.Services;
+using Serilog;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LibraryApp;
@@ -51,13 +52,13 @@ public class Terminal
                     BorrowMenu();
                     break;
                 case "X":
+                    SaveInFile();
                     ByeMessage();
                     return;
             };
         }
     }
 
-    //Może warto by było to podzielić na mniejsze klasy, do zostanowienia. Ale na razie pokazuję bajer "region". Zauważ, że możesz to przyjemnie zwijać.
     #region ReaderMenu
 
     private void ReaderMenu()
@@ -79,7 +80,7 @@ public class Terminal
                     break;
                 case "2":
                 case "3":
-                    GetReaderById();
+                    _terminalService.GetReaderById();
                     ClickAnyButton();
                     break;
                 case "4":
@@ -106,37 +107,6 @@ public class Terminal
 
         _terminalService.AddReader(firstName, lastName, out var message);
         Console.WriteLine(message);
-    }
-
-    // private void GetBookById()
-    //{
-    //    WriteAllToConsole(_terminalService);
-    //    var isValid = false;
-    //    int number;
-    //    do
-    //    {
-    //        Console.WriteLine($"Input Book ID: ");
-    //        string input = Console.ReadLine();
-    //        isValid = int.TryParse(input, out number);
-    //        if (!isValid)
-    //        {
-    //            Console.WriteLine("Wrong value. Try again.");
-    //        }
-    //    } while (!isValid);
-
-    //    var book = bookRepository.GetById(number);
-    //    Console.WriteLine(book?.ToString());
-    //    Console.WriteLine($"Do you want to delete this book?");
-    //    Console.WriteLine($"Press 'Y' for Delete reader, anything else for leave");
-    //    var UserInput = Console.ReadLine().ToUpper();
-    //    if (UserInput == "Y")
-    //    {
-    //     //   _terminalService.RemoveBook(book, out var message);
-    //    }
-    //}
-    private void GetReaderById()
-    {
-        _terminalService.GetReaderById();
     }
 
     #endregion
@@ -236,20 +206,24 @@ public class Terminal
         return input;
     }
 
+    private void SaveInFile()
+    {
+        Console.WriteLine("Do you want to save in file all data?");
+        Console.WriteLine("Press 'Y' for save");
+        var input = Console.ReadLine().ToUpper();
+        if (input == "Y")
+        {
+            _terminalService.SaveAllBooksToFile();
+            _terminalService.SaveAllReadersToFile();
+        }
+    }
+
     private void ByeMessage()
     {
+        Log.Information("App closed");
         Console.WriteLine($"Bye Bye!");
     }
 
-    static void WriteAllToConsole(IReadRepository<IEntity> repository)
-    {
-        Console.WriteLine($"Items from SQL:");
-        var items = repository.GetAll();
-        foreach (var entity in items)
-        {
-            Console.WriteLine(entity.ToString());
-        }
-    }
     #endregion
 
 }

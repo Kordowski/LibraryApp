@@ -1,5 +1,8 @@
-﻿using LibraryApp.Entities;
+﻿using System.Text.Json.Nodes;
+using LibraryApp.Entities;
 using LibraryApp.Repositories;
+using Newtonsoft.Json;
+using Serilog;
 
 namespace LibraryApp.Services
 {
@@ -68,29 +71,6 @@ namespace LibraryApp.Services
             message = "";
         }
 
-        //public void RemoveBook(IRepository<Book> bookRepository, out string message)
-        //{
-        //    if (string.IsNullOrEmpty(id))
-        //    {
-        //        message = "Wrong first name.";
-        //        return;
-        //    }
-
-        //    if (int.TryParse(id, out int number))
-        //    {
-        //        message = "Wrong last name.";
-        //        return;
-        //    }
-
-        //    var list = _bookRepository.GetAll();
-        //    foreach (var item in list)
-        //    {
-        //        Console.WriteLine(item);
-        //    }
-        //    message = "";
-        //}
-       
-
         public void GetReaderById()
         {
             WriteAllToConsole(_readerRepository);
@@ -149,6 +129,22 @@ namespace LibraryApp.Services
             {
                 Console.WriteLine(entity.ToString());
             }
+        }
+        
+
+        public void SaveAllReadersToFile()
+        {
+            string json = JsonConvert.SerializeObject(_readerRepository.GetAll());
+            string filePath = "SavedInFile\\Readers.json";
+            File.WriteAllText(filePath, json);
+            Log.Information("Readers saved in file.");
+        }
+        public void SaveAllBooksToFile()
+        {
+            string json = JsonConvert.SerializeObject(_bookRepository.GetAll());
+            string filePath = "SavedInFile\\Books.json";
+            File.WriteAllText(filePath, json);
+            Log.Information("Books saved in file.");
         }
     }
 }

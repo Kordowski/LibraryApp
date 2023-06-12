@@ -90,5 +90,10 @@ namespace LibraryApp.Data
             Console.WriteLine($"Reader removed => {e.FirstName}");
             Log.Information($"Book {e.FirstName} {e.LastName} Removed!");
         }
+
+        private void SeedDataFromFiles()
+        {
+
+        }
     }
 }

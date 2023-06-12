@@ -3,12 +3,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .WriteTo.File("Audit.txt")
-    .CreateLogger();
+
 
 var startup = new Startup();
+
+startup.CreateDir();
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.File("SavedInFile//Audit.txt")
+    .CreateLogger();
 
 var serviceProvider = startup.BuildServiceProvider();
 
