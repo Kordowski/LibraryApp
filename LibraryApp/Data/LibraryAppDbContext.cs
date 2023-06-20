@@ -10,16 +10,16 @@ namespace LibraryApp.Data
 {
     public class LibraryAppDbContext : DbContext
     {
-        //public LibraryAppDbContext(DbContextOptions<LibraryAppDbContext> options) : base(options)
-        //{
+        public LibraryAppDbContext(DbContextOptions<LibraryAppDbContext> options) : base(options)
+        {
 
-        //}
-        //public DbSet<Reader> Readers => Set<Reader>();
-        //public DbSet<Book> Books => Set<Book>();
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    base.OnConfiguring(optionsBuilder);
-        //    optionsBuilder.UseInMemoryDatabase("StorageAppDb");
-        //}
+        }
+        public DbSet<Reader> Readers => Set<Reader>();
+        public DbSet<Book> Books => Set<Book>();
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseInMemoryDatabase("StorageAppDb");
+        }
     }
 }

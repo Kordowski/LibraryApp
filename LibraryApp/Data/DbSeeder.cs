@@ -104,14 +104,12 @@ namespace LibraryApp.Data
                 var data = JsonConvert.DeserializeObject<List<Book>>(jsonContent);
                 foreach (var book in data)
                 {
-
                     _bookRepository.Add(book);
                 }
-
             }
             else
             {
-                Console.WriteLine("File not exist.");
+                throw new ArgumentException("File not exist.");
             }
             _bookRepository.Save();
         }
@@ -131,7 +129,7 @@ namespace LibraryApp.Data
             }
             else
             {
-                Console.WriteLine("File not exist.");
+                throw new ArgumentException("File not exist.");
             }
             _readerRepository.Save();
         }
