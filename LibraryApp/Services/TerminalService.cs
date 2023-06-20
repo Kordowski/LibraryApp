@@ -38,12 +38,9 @@ namespace LibraryApp.Services
             };
 
             _readerRepository.Add(reader);
-
             _readerRepository.Save();
             message = "";
         }
-
-
 
         public void AddBook(string title, string author, out string message)
         {
@@ -70,7 +67,6 @@ namespace LibraryApp.Services
             _bookRepository.Save();
             message = "";
         }
-
         public void GetReaderById()
         {
             WriteAllToConsole(_readerRepository);
@@ -87,6 +83,7 @@ namespace LibraryApp.Services
                 _readerRepository.Save();
             }
         }
+
         public void GetBookById()
         {
             WriteAllToConsole(_bookRepository);
@@ -103,6 +100,7 @@ namespace LibraryApp.Services
                 _bookRepository.Save();
             }
         }
+
         public void WriteAllToConsole(IReadRepository<IEntity> repository)
         {
             Console.WriteLine($"Items from SQL:");
@@ -121,6 +119,7 @@ namespace LibraryApp.Services
                 Console.WriteLine(entity.ToString());
             }
         }
+
         public void WriteAllBooksToConsole()
         {
             var items = _bookRepository.GetAll();
@@ -130,7 +129,6 @@ namespace LibraryApp.Services
                 Console.WriteLine(entity.ToString());
             }
         }
-        
 
         public void SaveAllReadersToFile()
         {
@@ -139,6 +137,7 @@ namespace LibraryApp.Services
             File.WriteAllText(filePath, json);
             Log.Information("Readers saved in file.");
         }
+
         public void SaveAllBooksToFile()
         {
             string json = JsonConvert.SerializeObject(_bookRepository.GetAll());
@@ -148,3 +147,6 @@ namespace LibraryApp.Services
         }
     }
 }
+
+
+

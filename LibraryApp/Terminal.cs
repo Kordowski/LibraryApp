@@ -14,7 +14,7 @@ public class Terminal
     {
         _terminalService = terminalService;
     }
-     
+
     public void Start()
     {
         Hello();
@@ -26,7 +26,6 @@ public class Terminal
         Console.WriteLine("=====================================");
         Console.WriteLine("      Welcome to LibraryApp");
         Console.WriteLine("=====================================");
-
         ClickAnyButton();
     }
 
@@ -37,7 +36,7 @@ public class Terminal
             Console.WriteLine("Choose an option:");
             Console.WriteLine("1.Reader");
             Console.WriteLine("2.Book");
-            Console.WriteLine("3.Borrow Book");
+            //Console.WriteLine("3.Borrow Book");
             Console.WriteLine("Press 'x' to close App");
 
             switch (ReadKey())
@@ -48,9 +47,9 @@ public class Terminal
                 case "2":
                     BookMenu();
                     break;
-                case "3":
-                    BorrowMenu();
-                    break;
+                //case "3":
+                //    BorrowMenu();
+                //    break;
                 case "X":
                     SaveInFile();
                     ByeMessage();
@@ -87,7 +86,7 @@ public class Terminal
                     _terminalService.WriteAllReadersToConsole();
                     ClickAnyButton();
                     break;
-                    
+
                 case "X":
                     return;
             };
@@ -225,5 +224,4 @@ public class Terminal
     }
 
     #endregion
-
 }
