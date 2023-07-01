@@ -18,6 +18,15 @@ namespace LibraryApp.Data
             _readerRepository = readerRepository;
             _bookRepository = bookRepository;
         }
+        public void IfFilesExistSeedFromMemory()
+        {
+            string filePathReaders = "SavedInFile\\Readers.json";
+            string filePathBooks = "SavedInFile\\Books.json";
+            if (!File.Exists(filePathReaders) || !File.Exists(filePathBooks))
+            {
+                SeedData();
+            }
+        }
 
         public void Seed()
         {
@@ -46,11 +55,11 @@ namespace LibraryApp.Data
                 new Book { Author = "Agatha Christie", Title = "And Then There Were None" },
                 new Book { Author = "Cao Xueqin", Title = "Dream of the Red Chamber" },
                 new Book { Author = "J. R. R. Tolkien", Title = "The Hobbit" },
-                new Book { Author = "The Lion, the Witch and the Wardrobe", Title = "C. S. Lewis" },
-                new Book { Author = "She: A History of Adventure", Title = "H. Rider Haggard" },
-                new Book { Author = "Harry Potter and the Chamber of Secrets", Title = "J. K. Rowling" },
-                new Book { Author = "Harry Potter and the Chamber of Secrets", Title = "J. K. Rowling" },
-                new Book { Author = "Harry Potter and the Prisoner of Azkaban", Title = "J. K. Rowling" }
+                new Book { Author = "C. S. Lewis", Title = "The Lion, the Witch and the Wardrobe"},
+                new Book { Author = "H. Rider Haggard", Title = "She: A History of Adventure"},
+                new Book { Author = "J. K. Rowling", Title = "Harry Potter and the Chamber of Secrets"},
+                new Book { Author = "J. K. Rowling", Title = "Harry Potter and the Chamber of Secrets"},
+                new Book { Author = "J. K. Rowling", Title = "Harry Potter and the Prisoner of Azkaban"}
             };
 
             _bookRepository.AddBatch(books);
@@ -109,7 +118,7 @@ namespace LibraryApp.Data
             }
             else
             {
-                throw new ArgumentException("File not exist.");
+                Console.WriteLine("File not exist.");
             }
             _bookRepository.Save();
         }
@@ -129,18 +138,9 @@ namespace LibraryApp.Data
             }
             else
             {
-                throw new ArgumentException("File not exist.");
+                Console.WriteLine("File not exist.");
             }
             _readerRepository.Save();
-        }
-        public void IfFilesExistSeedFromMemory()
-        {
-            string filePathReaders = "SavedInFile\\Readers.json";
-            string filePathBooks = "SavedInFile\\Books.json";
-            if (!File.Exists(filePathReaders) || !File.Exists(filePathBooks))
-            {
-                SeedData();
-            }
-        }
+        } 
     }
 }

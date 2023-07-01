@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Nodes;
 using LibraryApp.Entities;
 using LibraryApp.Repositories;
+using Microsoft.Identity.Client;
 using Newtonsoft.Json;
 using Serilog;
 
@@ -67,6 +68,7 @@ namespace LibraryApp.Services
             _bookRepository.Save();
             message = "";
         }
+
         public void GetReaderById()
         {
             WriteAllToConsole(_readerRepository);
@@ -76,7 +78,7 @@ namespace LibraryApp.Services
             Console.WriteLine(reader?.ToString());
             Console.WriteLine($"Do you want to delete this reader?");
             Console.WriteLine($"Press 'Y' for Delete reader, anything else for leave");
-            var UserInput = Console.ReadLine().ToUpper();
+            var UserInput = Console.ReadLine()!.ToUpper();
             if (UserInput == "Y")
             {
                 _readerRepository.Remove(reader);
@@ -93,7 +95,7 @@ namespace LibraryApp.Services
             Console.WriteLine(book?.ToString());
             Console.WriteLine($"Do you want to delete this book?");
             Console.WriteLine($"Press 'Y' for Delete reader, anything else for leave");
-            var UserInput = Console.ReadLine().ToUpper();
+            var UserInput = Console.ReadLine()!.ToUpper();
             if (UserInput == "Y")
             {
                 _bookRepository.Remove(book);
@@ -144,6 +146,39 @@ namespace LibraryApp.Services
             string filePath = "SavedInFile\\Books.json";
             File.WriteAllText(filePath, json);
             Log.Information("Books saved in file.");
+        }
+        public List<Reader> OrderByFirstName()
+        {
+            var readers = _readerRepository.GetAll();
+            return readers.OrderBy(x => x.FirstName).ToList();
+        }
+        public void OrderByAuthor()
+        {
+            var books = _bookRepository.GetAll();
+            books
+                .OrderBy(x => x.Author)
+                .ThenBy(x => x.Title)
+                .ToList();
+            foreach (var book in books)
+            {
+                Console.WriteLine(book.ToString());
+            }
+        }
+        public void FindNameLongerThan(int input)
+        {
+            var readers = _readerRepository.GetAll();
+            var value = readers.Where(x => x.FirstName.Length >= input);
+            if (value.Any())
+            {
+                foreach (var reader in value)
+                {
+                    Console.WriteLine(reader);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No results");
+            }
         }
     }
 }

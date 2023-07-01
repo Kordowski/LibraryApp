@@ -12,6 +12,6 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var serviceProvider = startup.BuildServiceProvider();
-var terminal = serviceProvider.GetService<Terminal>();
+var terminal = serviceProvider.GetService<Terminal>()!;
 terminal.Start();
 Log.CloseAndFlush();

@@ -1,6 +1,7 @@
 ﻿using LibraryApp.Entities;
 using LibraryApp.Repositories;
 using LibraryApp.Services;
+using Newtonsoft.Json.Linq;
 using Serilog;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -69,6 +70,7 @@ public class Terminal
             Console.WriteLine("2.Remove Reader");
             Console.WriteLine("3.Find Reader by ID");
             Console.WriteLine("4.Show All Readers");
+            Console.WriteLine("5.Show names longer than");
             Console.WriteLine("Press 'x' to back to main menu");
 
             switch (ReadKey())
@@ -84,6 +86,10 @@ public class Terminal
                     break;
                 case "4":
                     _terminalService.WriteAllReadersToConsole();
+                    ClickAnyButton();
+                    break;
+                case "5":
+                    _terminalService.FindNameLongerThan(ReadInt());
                     ClickAnyButton();
                     break;
 
@@ -121,6 +127,7 @@ public class Terminal
             Console.WriteLine("2.Get Book by Id");
             Console.WriteLine("3.Remove Book");
             Console.WriteLine("4.Show All Books");
+            Console.WriteLine("5.Sort Books");
             Console.WriteLine("Press 'x' to back to main menu");
 
             switch (ReadKey())
@@ -136,6 +143,10 @@ public class Terminal
                     break;
                 case "4":
                     _terminalService.WriteAllBooksToConsole();
+                    ClickAnyButton();
+                    break;
+                case "5":
+                    _terminalService.OrderByAuthor();
                     ClickAnyButton();
                     break;
                 case "X":
@@ -209,7 +220,7 @@ public class Terminal
     {
         Console.WriteLine("Do you want to save in file all data?");
         Console.WriteLine("Press 'Y' for save");
-        var input = Console.ReadLine().ToUpper();
+        var input = Console.ReadLine()!.ToUpper();
         if (input == "Y")
         {
             _terminalService.SaveAllBooksToFile();
@@ -222,6 +233,26 @@ public class Terminal
         Log.Information("App closed");
         Console.WriteLine($"Bye Bye!");
     }
+
+    private int ReadInt()
+    {
+        var value = 0;
+        while (true)
+        {
+            Console.WriteLine("Type how long names you want:");
+            var input = Console.ReadLine();
+            if (Int32.TryParse(input, out value))
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Enter correct number.");
+            }
+        }
+        return value;
+    }
+
 
     #endregion
 }
